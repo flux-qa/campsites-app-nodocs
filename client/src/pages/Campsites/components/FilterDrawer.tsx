@@ -15,16 +15,12 @@ type FilterDrawerProps = {
 };
 
 const FilterDrawer = (props: FilterDrawerProps): JSX.Element => {
-  // refs to calculate the height of the filter scroll area:
-  // necessary because on mobile, 100vh includes the mobile browser's
-  // menu bar.
+
   const { ref: totalRef, height: totalHeight } = useElementSize();
   const { ref: headerRef, height: headerHeight } = useElementSize();
   const { ref: footerRef, height: footerHeight } = useElementSize();
 
-  // filtersHeight calculation includes a magic number of 48px to account
-  // for padding in the header and footer -- for some reason, this is not
-  // included in the height refs
+
   const filtersHeight = totalHeight - headerHeight - footerHeight - 48;
 
   const resetFiltersDisabled =

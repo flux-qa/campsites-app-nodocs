@@ -9,17 +9,7 @@ from campsites_api.dto import CampsiteDTO
 
 
 def process_data(file: UploadFile) -> List[CampsiteDTO]:
-    """
-    Takes in a csv file containing campsite data, returns a list of processed
-    CampsiteDTO objects.
 
-    Parameters:
-        file (UploadFile): file uploaded via API
-
-    Returns:
-        processed_campsites (List[CampsiteDTO]): phone number as string
-            of numbers only (or None)
-    """
     raw_rows = []
 
     reader = csv.DictReader(codecs.iterdecode(file.file, "utf-8"))

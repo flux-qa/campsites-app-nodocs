@@ -3,32 +3,14 @@ from typing import Union
 
 
 def process_phone_number(phone_number_str: Union[str, None]) -> Union[str, None]:
-    """
-    Removes all special characters from the phone number
 
-    Parameters:
-        phone_number_str (str | None): raw phone number string (or None, if does not exist)
-
-    Returns:
-        phone_number (str | None): phone number as string of numbers only (or None)
-    """
     if phone_number_str is None:
         return None
     return re.sub("[^A-Za-z0-9]+", "", phone_number_str)
 
 
 def process_dates(date_open_str: Union[str, None]) -> dict:
-    """
-    Takes in a string indicating when the camp opens and closes (e.g. "mid may-late sep").
-    Processes this string into month_open and month_close, represented by an integer
-    value indicating the month
 
-    Parameters:
-        date_open_str (str | None): date string for camp opening
-
-    Returns:
-        dates_dict (dict): contains "month_open" and "month_close" as integers
-    """
     dates_dict = {
         "month_open": None,
         "month_close": None,
@@ -81,17 +63,7 @@ def process_dates(date_open_str: Union[str, None]) -> dict:
 
 
 def process_country(state_str: str) -> str:
-    """
-    takes in a string representation of a state or province and returns
-    the country. Only compares against the list of Canadian provinces
-    because it is either Canada OR United States
 
-    Parameters:
-        state_str (str | None): 2-character string representing state or province
-
-    Returns:
-        country (str): country ("United States" or "Canada")
-    """
     canadian_provinces = [
         "AB",
         "BC",
@@ -111,20 +83,7 @@ def process_country(state_str: str) -> str:
 
 
 def process_amenities(amenity_str: Union[str, None]) -> dict:
-    """
-    processes the raw string of amenity codes into a dictionary.
-    amenity codes can be found under the map at
-    http://www.uscampgrounds.info/
 
-    The amenity list may not be complete, so None values indicate
-    that information is not available.
-
-    Parameters:
-        amenity_str (str | None): space-separated string of amenity codes
-
-    Returns:
-        amenity_dict (dict): a dictionary of processed amenity values
-    """
 
     amenity_dict = {
         "has_water_hookup": None,

@@ -8,10 +8,9 @@ export const getCampsites = async (
   limit: number = 25,
   filterState: CampsiteFilters
 ): Promise<CampsiteList> => {
-  // calculate the offset to give to the API based on the page and limit
-  // pagination component has index of 1, so we need to index it to 0 instead
+
   const offset = (page - 1) * limit;
-  // remove null filters from filterState
+
   const nonNullFilters =
     filterNullValuesFromObject<CampsiteFilters>(filterState);
   const query = QueryString.stringify(nonNullFilters);

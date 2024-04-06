@@ -24,7 +24,6 @@ import {
 } from "components";
 import { campsiteTypeMap } from "constants/campsiteTypes";
 
-// component for filter title, with short name for ease of use
 const FT = (props: { label: string }) => {
   return (
     <Text fz="md" weight={500}>
@@ -41,8 +40,6 @@ type FiltersProps = {
 const Filters = (props: FiltersProps): JSX.Element => {
   const { filterState, handleFilterStateChange } = props;
 
-  // clear out states in the filterState that don't correspond
-  // to currently-selected country
   useEffect(() => {
     if (filterState.state) {
       const newStates = filterState.state.filter(
@@ -55,7 +52,7 @@ const Filters = (props: FiltersProps): JSX.Element => {
         state: newStates.length ? newStates : null,
       });
     }
-  }, [filterState.country]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [filterState.country]); 
 
   const countryOptions = Object.values(CampsiteCountryEnum).map((s) => ({
     value: s,

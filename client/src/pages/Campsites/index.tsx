@@ -21,8 +21,6 @@ const Campsites = (): JSX.Element => {
 
   const itemsPerPage = 20;
 
-  // set filter state and page based on search params on load.
-  // page is set to 0 on load to indicate this should run.
   useEffect(() => {
     if (page === 0) {
       const params = QueryString.parse(searchParams.toString());
@@ -38,7 +36,6 @@ const Campsites = (): JSX.Element => {
     }
   }, [searchParams, page]);
 
-  // update search params when filter state or page number changes
   useEffect(() => {
     if (page > 0) {
       const params = new URLSearchParams({
@@ -51,10 +48,6 @@ const Campsites = (): JSX.Element => {
     }
   }, [page, filterState, setSearchParams]);
 
-  // react-query handler for fetching data. Handles loading and error states
-  // as well as refetching when filter state or page changes.
-  // disabled when page is 0, that is, page has not yet been determined
-  // from the query params
   const {
     data: campsites,
     isError,
@@ -74,15 +67,12 @@ const Campsites = (): JSX.Element => {
     }
   );
 
-  // determine the number of pages to render in pagination based on results
   useEffect(() => {
     if (campsites) {
       setTotalPages(Math.ceil(campsites?.num_total_results / itemsPerPage));
     }
   }, [campsites]);
 
-  // function to toggle the sort direction between asc and desc
-  // reset page to 1 when sort direction changes
   const toggleSortDir = () => {
     const newSortDir =
       filterState.sort_dir === SortDirEnum.ASC
@@ -92,15 +82,12 @@ const Campsites = (): JSX.Element => {
     setPage(1);
   };
 
-  // function to change the sort by value
-  // reset page to 1 when sort by changes
   const setSortBy = (newSortBy: SortByEnum) => {
     setFilterState({ ...filterState, sort_by: newSortBy });
     setPage(1);
   };
 
-  // function to handle filter state change
-  // reset page to 1 when filters change
+
   const handleFilterStateChange = (newFilterState: CampsiteFilters) => {
     setFilterState({ ...newFilterState });
     setPage(1);

@@ -10,15 +10,9 @@ type AmenityIconProps = {
 };
 
 const AmenityIcon = (props: AmenityIconProps) => {
-  // determine color of icon.
-  // green means amenity is present, red means it is not,
-  // and grey means unknown
   const color =
     props.status !== null ? (props.status ? "green" : "red") : "gray";
 
-  // determine variant of icon.
-  // for colorblindness accessibility, True state is filled; False has an outline;
-  // and null has no outline and no fill.
   const variant =
     props.status !== null ? (props.status ? "filled" : "outline") : "light";
 
