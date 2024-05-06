@@ -232,7 +232,6 @@ export const MonthRangeFilter = <T extends unknown>(props: {
     setChecked(isChecked);
   };
 
-  // reset check state to false if months are anything besides (1, 12)
   useEffect(() => {
     if (checked && (props.openValue !== 1 || props.closeValue !== 12)) {
       setChecked(false);
@@ -244,16 +243,12 @@ export const MonthRangeFilter = <T extends unknown>(props: {
   const onChange = (filterKey: keyof T, stringVal: string | null) => {
     const val = stringVal ? Number(stringVal) : null;
     if (filterKey === "month_open__lt") {
-      // toggle closeValue to null if the chosen open month is greater than
-      // the currnet closeValue
       const newCloseValue =
         val && props.closeValue && props.closeValue < val
           ? null
           : props.closeValue;
       props.onChange(val, newCloseValue);
     } else if (filterKey === "month_close__gt") {
-      // toggle openValue to null if the chosen close month is less than
-      // the current openValue
       const newOpenValue =
         val && props.openValue && props.openValue > val
           ? null

@@ -92,14 +92,11 @@ const SortDropdown = (props: { sortProps: SortProps }): JSX.Element => {
 const ListActions = (props: ListActionProps): JSX.Element => {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  // calculating the start result number to build display string
-  // e.g. 1-20 of 1000
   const { pageProps } = props;
   const startResultNum = (pageProps.page - 1) * pageProps.itemsPerPage + 1;
   const endResultNum = pageProps.page * pageProps.itemsPerPage;
   const resultsText = `${startResultNum}-${endResultNum} of ${props.numResults}`;
 
-  // get the number of applied filters -- remove sort filters
   const numAppliedFilters = Object.keys(
     filterNullValuesFromObject<CampsiteFilters>(props.filterState)
   ).filter((key) => !["sort_by", "sort_dir"].includes(key)).length;

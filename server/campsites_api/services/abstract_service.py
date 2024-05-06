@@ -18,24 +18,20 @@ class AbstractService(Generic[ModelType, ModelTypeDTO, FilterTypeDTO]):
         self.session = session
 
     def __filter(self, query: Query, filters: FilterTypeDTO) -> Query:
-        # keys to exclude (sorting and pagination)
         excluded_keys = ["offset", "limit", "sort_by", "sort_dir"]
         for name in filters:
             if filters[name] is not None:
                 if name in excluded_keys:
                     continue
                 if name[-4:] == "__lt":
-                    # greater than query
                     query = query.filter(
                         getattr(self.model, name[:-4]) <= filters[name]
                     )
                 elif name[-4:] == "__gt":
-                    # less than query
                     query = query.filter(
                         getattr(self.model, name[:-4]) >= filters[name]
                     )
                 elif name[-4:] == "__ct":
-                    # contains query
                     query = query.filter(
                         func.lower(getattr(self.model, name[:-4])).contains(
                             filters[name].lower()
@@ -102,7 +98,6 @@ class AbstractService(Generic[ModelType, ModelTypeDTO, FilterTypeDTO]):
         if db_item is None:
             raise HTTPException(status_code=404, detail=f"Item with id {id} not found")
         for key, value in item.dict().items():
-            # we want to ensure we are not overwriting the ID
             if key != "id":
                 setattr(db_item, key, value)
         try:

@@ -19,38 +19,29 @@ def process_data(file: UploadFile) -> List[CampsiteDTO]:
     if len(raw_rows) == 0:
         raise HTTPException(status_code=422, detail="Empty file uploaded.")
 
-    # using a typed list so it auto-converts values and gives helpful
-    # failures for unclean data
+
     processed_campsites: List[CampsiteDTO] = []
 
-    # process each row
     for row in raw_rows:
-        # go through all values and strip spaces.
-        # also change values to null if empty string
+
         row = {k: v.strip() if v.strip() != "" else None for (k, v) in row.items()}
 
-        # a few entries have "dispersed" for number of campsites; as this is not
-        # a known number, setting value to null
+
         row["num_campsites"] = (
             row["num_campsites"]
             if row["num_campsites"] is not None and row["num_campsites"].isdigit()
             else None
         )
 
-        # casting campsite type correctly
         row["campsite_type"] = row["type"]
 
-        # phone number
         row["phone"] = ut.process_phone_number(row["phone"])
 
-        # dates
         dates = ut.process_dates(row["dates_open"])
         row = row | dates
 
-        # country
         row["country"] = ut.process_country(row["state"])
 
-        # amenities
         amenities = ut.process_amenities(row["amenities"])
         row = row | amenities
         try:

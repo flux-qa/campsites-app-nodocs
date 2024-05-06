@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 
 type AmenityIconProps = {
   icon: string;
-  status: boolean | null; // null being unknown
+  status: boolean | null; 
   description?: string;
   size: "md" | "lg";
 };

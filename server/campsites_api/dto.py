@@ -33,7 +33,6 @@ class CampsiteDTO(BaseModel):
     nearest_town: Optional[str]
     nearest_town_distance: Optional[float]
     nearest_town_bearing: Optional[BearingEnum]
-    # amenities
     has_rv_hookup: Optional[bool]
     has_water_hookup: Optional[bool]
     has_electric_hookup: Optional[bool]
@@ -87,7 +86,6 @@ class CampsiteFilterDTO(BaseModel):
     num_campsites__gt: Optional[int]
     num_campsites__lt: Optional[int]
     nearest_town_distance__lt: Optional[float]
-    # amenities
     has_rv_hookup: Optional[bool]
     has_water_hookup: Optional[bool]
     has_electric_hookup: Optional[bool]
@@ -102,8 +100,7 @@ class CampsiteFilterDTO(BaseModel):
     accepts_pets: Optional[bool]
     low_no_fee: Optional[bool]
 
-    # arguments are the query parameters used by FastAPI. Parsing it this way means
-    # we don't need to list each query parameter in the router function
+
     @classmethod
     def parser(
         cls,
@@ -137,8 +134,6 @@ class CampsiteFilterDTO(BaseModel):
         accepts_pets: Optional[bool] = Query(None),
         low_no_fee: Optional[bool] = Query(None),
     ) -> Dict:
-        # get the list of all arguments passed
         queries = locals()
-        # remove cls argument
         queries.pop("cls")
         return queries

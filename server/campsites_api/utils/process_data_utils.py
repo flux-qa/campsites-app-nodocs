@@ -38,9 +38,7 @@ def process_dates(date_open_str: Union[str, None]) -> dict:
         "dec": 12,
     }
 
-    # replace "-" with spaces to ensure we get a clean split
     date_open_arr = date_open_str.replace("-", " ").split(" ")
-    # find first string in array that contains a month
     open_str = date_open_arr.pop(0)
     while open_str not in dates_map.keys() and len(date_open_arr) > 0:
         open_str = date_open_arr.pop(0)
@@ -51,7 +49,6 @@ def process_dates(date_open_str: Union[str, None]) -> dict:
     if len(date_open_arr) == 0:
         return dates_dict
 
-    # date open has been found; repeat process to find closing month
     close_str = date_open_arr.pop(0)
     while close_str not in dates_map.keys() and len(date_open_arr) > 0:
         close_str = date_open_arr.pop(0)
@@ -100,14 +97,12 @@ def process_amenities(amenity_str: Union[str, None]) -> dict:
         "low_no_fee": None,
     }
 
-    # if amenities is None, skip over processing and return amenity_dict as-is
     if amenity_str is None:
         return amenity_dict
 
     amenities = amenity_str.strip().split(" ")
 
     for amenity_code in amenities:
-        # hookups
         if amenity_code in ["NH", "E", "WE", "WES"]:
             amenity_dict["has_electric_hookup"] = True if "E" in amenity_code else False
             amenity_dict["has_water_hookup"] = True if "W" in amenity_code else False
@@ -117,16 +112,13 @@ def process_amenities(amenity_str: Union[str, None]) -> dict:
             elif amenity_code == "NH":
                 amenity_dict["has_rv_hookup"] = False
 
-        # sanitary dump
         if amenity_code in ["DP", "NP"]:
             amenity_dict["has_sanitary_dump"] = True if amenity_code == "DP" else False
 
-        # max RV length
         if "ft" in amenity_code:
             length = int(amenity_code.split("ft")[0])
             amenity_dict["max_rv_length"] = length
 
-        # toilets
         if amenity_code in ["FT", "VT", "FTVT", "PT", "NT"]:
             if amenity_code == "NT":
                 amenity_dict["has_toilets"] = False
@@ -140,25 +132,20 @@ def process_amenities(amenity_str: Union[str, None]) -> dict:
                 }
                 amenity_dict["toilet_type"] = toilet_map[amenity_code]
 
-        # drinking water
         if amenity_code in ["DW", "NW"]:
             amenity_dict["has_drinking_water"] = True if amenity_code == "DW" else False
 
-        # showers
         if amenity_code in ["SH", "NS"]:
             amenity_dict["has_showers"] = True if amenity_code == "SH" else False
 
-        # reservations
         if amenity_code in ["RS", "NR"]:
             amenity_dict["accepts_reservations"] = (
                 True if amenity_code == "RS" else False
             )
 
-        # pets
         if amenity_code in ["PA", "NP"]:
             amenity_dict["accepts_pets"] = True if amenity_code == "PA" else False
 
-        # low fee
         if amenity_code == "L$":
             amenity_dict["low_no_fee"] = True
 

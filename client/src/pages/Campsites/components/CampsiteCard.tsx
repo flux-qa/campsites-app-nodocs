@@ -134,3 +134,4 @@ const CampsiteCard = (props: { campsite: Campsite }): JSX.Element => {
 };
 
 export default CampsiteCard;
+

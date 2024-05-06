@@ -90,7 +90,6 @@ const Filters = (props: FiltersProps): JSX.Element => {
     });
   };
 
-  // handle three state filter change: true, false, or null
   const handleThreeStateFilterChange = (filterKey: keyof CampsiteFilters) => {
     const valueOptions = [true, false, null];
     const currentValueIndex = valueOptions.indexOf(
